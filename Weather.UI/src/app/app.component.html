@@ -1,0 +1,31 @@
+<div class="all">
+  <h1>Weather Forecast</h1>
+  <div class="Coordinate-Form-Container">
+    <form [formGroup]="Cooridnates">
+      <mat-form-field>
+        <input matInput placeholder="Latitude" formControlName="Latitude" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Longitude" formControlName="Longitude" />
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="button">
+    <button
+      [disabled]="Cooridnates.invalid"
+      (click)="getForecast()"
+      mat-raised-button
+      color="accent"
+    >
+      Get Forecast
+    </button>
+    <button (click)="getLocation()" mat-raised-button color="accent">
+      Get Location
+    </button>
+  </div>
+
+  <div id="divChart">
+    <canvas id="chart"></canvas>
+  </div>
+</div>
