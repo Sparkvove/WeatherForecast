@@ -12,3 +12,12 @@
   width: 800px;
   height: 800px;
 }
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  margin-right: 10px;
+}

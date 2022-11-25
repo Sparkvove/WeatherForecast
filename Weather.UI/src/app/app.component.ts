@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Coordinates } from './models/coordinates';
+import { SaveFileService } from './services/save-file.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,8 @@ import { Coordinates } from './models/coordinates';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  weatherForecast!: WeatherForecast;
+  isSaveButtonDisabled: boolean = true;
   Cooridnates: FormGroup = this.fb.group({
     Latitude: new FormControl('', [
       Validators.required,
@@ -30,19 +33,22 @@ export class AppComponent {
 
   constructor(
     private weatherForecastService: WeatherForecastService,
+    private saveFileService: SaveFileService,
     private fb: FormBuilder
   ) {}
 
-  getForecast() {
+  public getForecast() {
     this.deleteCurrentChart();
     this.weatherForecastService
       .getWeatherForecast(this.Cooridnates.value)
       .subscribe((result: WeatherForecast) => {
+        this.weatherForecast = result;
         this.createChart(this.Cooridnates.value, result);
+        this.isSaveButtonDisabled = false;
       });
   }
 
-  getLocation() {
+  public getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position: any) => {
@@ -60,7 +66,7 @@ export class AppComponent {
     }
   }
 
-  createChart(cords: Coordinates, weatherForecast: WeatherForecast) {
+  public createChart(cords: Coordinates, weatherForecast: WeatherForecast) {
     Chart.register(...registerables);
     var chart = new Chart('chart', {
       type: 'line',
@@ -88,10 +94,20 @@ export class AppComponent {
     });
   }
 
-  deleteCurrentChart() {
+  public deleteCurrentChart() {
     let chartStatus = Chart.getChart('chart');
     if (chartStatus != undefined) {
       chartStatus.destroy();
     }
+  }
+
+  public saveFile(): void {
+    const dlink: HTMLAnchorElement = document.createElement('a');
+    dlink.download = this.saveFileService.createFileName(this.weatherForecast);
+    dlink.href =
+      'data:text/plain;charset=utf-16,' +
+      this.saveFileService.populateFileData(this.weatherForecast);
+    dlink.click(); // this will trigger the dialog window
+    dlink.remove();
   }
 }

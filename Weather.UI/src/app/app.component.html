@@ -11,18 +11,32 @@
       </mat-form-field>
     </form>
   </div>
-  <div class="button">
-    <button
-      [disabled]="Cooridnates.invalid"
-      (click)="getForecast()"
-      mat-raised-button
-      color="accent"
-    >
-      Get Forecast
-    </button>
-    <button (click)="getLocation()" mat-raised-button color="accent">
-      Get Location
-    </button>
+  <div class="buttons">
+    <div class="button">
+      <button
+        [disabled]="Cooridnates.invalid"
+        (click)="getForecast()"
+        mat-raised-button
+        color="accent"
+      >
+        Get Forecast
+      </button>
+    </div>
+    <div class="button">
+      <button (click)="getLocation()" mat-raised-button color="accent">
+        Get Location
+      </button>
+    </div>
+    <div class="button">
+      <button
+        [disabled]="isSaveButtonDisabled"
+        (click)="saveFile()"
+        mat-raised-button
+        color="accent"
+      >
+        Save Forecast
+      </button>
+    </div>
   </div>
 
   <div id="divChart">
