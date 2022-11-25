@@ -14,3 +14,7 @@ https://nodejs.org/en/download/
 <br>
 
 To Run API, open WeatherAPI.sln , and run it.
+
+
+Screen Example on running UI:
+![Screenshot](weatherForecastExample.png)
